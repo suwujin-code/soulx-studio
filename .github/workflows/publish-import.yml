@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.release-import/READY.json']
+    paths: ['SoulX-Public-Import.zip']
 
 permissions:
   contents: write
@@ -17,21 +17,18 @@ jobs:
   import-and-publish:
     if: github.repository == 'suwujin-code/soulx-studio'
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.23.2'
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Verify, import and publish reviewed preview
+      - name: Verify reviewed package before any publication
+        run: python scripts/import_public_release.py --verify-only SoulX-Public-Import.zip
+      - name: Import source and publish verified preview attachments
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python .release-import/import_release.py
+        run: python scripts/import_public_release.py
