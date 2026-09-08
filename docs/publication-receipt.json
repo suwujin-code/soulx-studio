@@ -1,0 +1,67 @@
+{
+  "status": "PUBLISHED_PREVIEW",
+  "repository": "suwujin-code/soulx-studio",
+  "tag": "v3.0.1-public-preview.1",
+  "release_id": 385026914,
+  "release_url": "https://github.com/suwujin-code/soulx-studio/releases/tag/v3.0.1-public-preview.1",
+  "published_at": "2026-09-08T20:07:07Z",
+  "source_commit": "f9a674eb5075fae575be40e4c8ffce204fe8795d",
+  "release_target_commitish": "28338ab52363452f307fcbcce4e3f1f76e051814",
+  "publication_commit": "2d33a6af98be5d52873abda1ec680e1c5be2ffcb",
+  "workflow_url": "https://github.com/suwujin-code/soulx-studio/actions/runs/34272872185",
+  "reviewed_package_sha256": "861c5fd0f81d9eab9cfe9a3d6f0cb345bf847cb367e348fa1f4759bb99ee50b7",
+  "reviewed_source_file_count": 123,
+  "target_system_acceptance": false,
+  "signed_or_notarized": false,
+  "assets": [
+    {
+      "name": "SoulX-Studio-3.0.1-public-preview.1-mac-arm64.zip",
+      "size": 3506927,
+      "sha256": "a46cf7c75a0bdd631697b2c5fe32d4781e513d398ec7c70ce05bf329950a2729",
+      "download_url": "https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-3.0.1-public-preview.1-mac-arm64.zip",
+      "remote_bytes_verified": true
+    },
+    {
+      "name": "SoulX-Studio-3.0.1-public-preview.1-mac-intel.zip",
+      "size": 3666697,
+      "sha256": "85ae092cbe863fb9ac87078692835cbe8e2276cadd5f28cb6a0b2296287dc8cd",
+      "download_url": "https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-3.0.1-public-preview.1-mac-intel.zip",
+      "remote_bytes_verified": true
+    },
+    {
+      "name": "SoulX-Studio-3.0.1-public-preview.1-windows-x64.zip",
+      "size": 3689711,
+      "sha256": "a94a5dcb46e77b3e229602f2a4fd01413d2a88d8749e79de7d337f0feb59f9be",
+      "download_url": "https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-3.0.1-public-preview.1-windows-x64.zip",
+      "remote_bytes_verified": true
+    },
+    {
+      "name": "SoulX-Studio-Promo-Landscape-1080p.mp4",
+      "size": 5976152,
+      "sha256": "a03a2b2f59811939384d77668a80bcb00b257f7fdd5f3c0c5443fb36c60c6ecc",
+      "download_url": "https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-Promo-Landscape-1080p.mp4",
+      "remote_bytes_verified": true
+    },
+    {
+      "name": "SoulX-Studio-Promo-Cover.jpg",
+      "size": 112941,
+      "sha256": "a9ae3f25a745626ec0772e479d4d0fe0c4d1b009b11c654f61bb7be9e9b2e1e6",
+      "download_url": "https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-Promo-Cover.jpg",
+      "remote_bytes_verified": true
+    },
+    {
+      "name": "SoulX-Studio-Reviewed-Public-Source.zip",
+      "size": 2817951,
+      "sha256": "17865efc1d9ce547a22a09d0501c33fe6b9e25f17c405d90caeab337e0fb9a72",
+      "download_url": "https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-Reviewed-Public-Source.zip",
+      "remote_bytes_verified": true
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "size": 656,
+      "sha256": "756b046076465c3c6b419d707d978a2a7ca828ed7a16e2c1ba9a95790cea2269",
+      "download_url": "https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SHA256SUMS.txt",
+      "remote_bytes_verified": true
+    }
+  ]
+}
