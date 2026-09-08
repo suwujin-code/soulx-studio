@@ -1,0 +1,123 @@
+name: Verify anonymous public downloads
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/verify-public-downloads.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: soulx-public-download-proof
+  cancel-in-progress: false
+
+jobs:
+  public-proof:
+    if: github.repository == 'suwujin-code/soulx-studio'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download every published asset WITHOUT login or authorization headers
+        env:
+          GH_TOKEN: ''
+          GITHUB_TOKEN: ''
+        shell: python
+        run: |
+          from datetime import datetime, timezone
+          import hashlib, io, json, os, pathlib, subprocess, time, urllib.request, urllib.parse, zipfile
+          root = pathlib.Path.cwd()
+          receipt = json.loads((root/'docs/publication-receipt.json').read_text())
+          repo = 'suwujin-code/soulx-studio'
+          tag = 'v3.0.1-public-preview.1'
+          prefix = f'https://github.com/{repo}/releases/download/{tag}/'
+          if receipt['repository'] != repo or receipt['tag'] != tag:
+              raise RuntimeError('Unexpected release receipt')
+          if os.environ.get('GH_TOKEN') or os.environ.get('GITHUB_TOKEN'):
+              raise RuntimeError('Anonymous verification must not receive token variables')
+          class HTTPSOnly(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  host = urllib.parse.urlparse(newurl).hostname or ''
+                  if not newurl.startswith('https://') or not (host == 'github.com' or host.endswith('.githubusercontent.com')):
+                      raise RuntimeError('Unexpected public download redirect')
+                  return super().redirect_request(req, fp, code, msg, headers, newurl)
+          opener = urllib.request.build_opener(HTTPSOnly())
+          def get(url, limit):
+              for attempt in range(3):
+                  try:
+                      request = urllib.request.Request(url, headers={'User-Agent':'SoulX-Anonymous-Download-Check'})
+                      with opener.open(request, timeout=60) as response:
+                          data = response.read(limit+1)
+                          if response.status != 200 or len(data) > limit:
+                              raise RuntimeError('Unexpected public response or download size')
+                          return data
+                  except Exception:
+                      if attempt == 2: raise
+                      time.sleep(2*(attempt+1))
+          public_repo = json.loads(get(f'https://api.github.com/repos/{repo}', 1000000))
+          if public_repo.get('private') is not False:
+              raise RuntimeError('Repository is not publicly readable')
+          release = json.loads(get(f'https://api.github.com/repos/{repo}/releases/tags/{tag}', 1000000))
+          if release['draft'] or not release['prerelease'] or release['id'] != receipt['release_id']:
+              raise RuntimeError('Public release identity/type differs')
+          if {a['name'] for a in release['assets']} != {a['name'] for a in receipt['assets']}:
+              raise RuntimeError('Remote asset inventory differs')
+          checked = []
+          source_zip = None
+          for item in receipt['assets']:
+              url = item['download_url']
+              if url != prefix+item['name'] or '/' in item['name'] or '\\' in item['name']:
+                  raise RuntimeError('Unexpected asset path')
+              data = get(url, item['size'])
+              digest = hashlib.sha256(data).hexdigest()
+              if len(data) != item['size'] or digest != item['sha256']:
+                  raise RuntimeError('Anonymous download integrity mismatch: '+item['name'])
+              checked.append({'name':item['name'], 'bytes':len(data), 'sha256':digest, 'anonymous_http_200':True, 'download_url':url})
+              if item['name'] == 'SoulX-Studio-Reviewed-Public-Source.zip':
+                  source_zip = data
+              print('ANONYMOUS_DOWNLOAD_OK', item['name'], len(data), digest)
+          if source_zip is None:
+              raise RuntimeError('Reviewed source asset missing')
+          intentional = {'README.md', 'PUBLICATION.md'}
+          exact = 0
+          with zipfile.ZipFile(io.BytesIO(source_zip)) as z:
+              members = [i for i in z.infolist() if not i.is_dir()]
+              if len(members) != 123:
+                  raise RuntimeError('Unexpected reviewed source count')
+              for item in members:
+                  if not item.filename.startswith('soulx-studio/'):
+                      raise RuntimeError('Unexpected source root')
+                  path = pathlib.PurePosixPath(item.filename[len('soulx-studio/'):])
+                  if path.is_absolute() or '..' in path.parts:
+                      raise RuntimeError('Unsafe source entry')
+                  dest = root/str(path)
+                  if not dest.is_file() or dest.is_symlink():
+                      raise RuntimeError('Source was not imported: '+str(path))
+                  if str(path) not in intentional:
+                      if dest.read_bytes() != z.read(item):
+                          raise RuntimeError('Reviewed source differs: '+str(path))
+                      exact += 1
+          report = {'status':'PASS', 'repository':repo, 'tag':tag, 'release_url':release['html_url'],
+                    'verified_at_utc':datetime.now(timezone.utc).isoformat(),
+                    'authorization_headers_sent':False, 'cookie_jar_used':False,
+                    'public_repository':True, 'public_prerelease':True,
+                    'assets_verified':len(checked), 'assets':checked,
+                    'reviewed_source_files_present':123, 'exact_source_files_matched':exact,
+                    'intentional_publication_document_updates':sorted(intentional),
+                    'target_os_installation_tested':False, 'genuine_cantonese_synthesis_tested':False,
+                    'workflow_url':f'https://github.com/{repo}/actions/runs/'+os.environ['GITHUB_RUN_ID'],
+                    'verified_repository_head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()}
+          dest = root/'docs/public-download-verification.json'
+          dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+          pathlib.Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('All 7 public release attachments downloaded without login and matched SHA-256. All 123 reviewed source files are present; 121 match byte-for-byte, README and PUBLICATION contain intentional publication links. This is not Mac/Windows installation or real TTS acceptance.\n',encoding='utf8')
+      - name: Save the public download verification receipt
+        run: |
+          git add -- docs/public-download-verification.json
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='SoulX Release Bot' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'docs: record anonymous downloads and complete reviewed source verification'
+          git push origin HEAD:main
