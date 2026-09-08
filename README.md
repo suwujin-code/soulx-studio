@@ -32,6 +32,18 @@ SoulX Studio 把这些工作放到同一个本地优先的界面中：**文稿 �
 
 *实际编译界面截图。演示文字为专门撰写的样例；队列与版本结果为测试音，不是客户作品或新的粤语音质样本。*
 
+## 下载安装预览版
+
+[公开 Release 页面](https://github.com/suwujin-code/soulx-studio/releases/tag/v3.0.1-public-preview.1)
+
+| 电脑 | 安装文件 |
+|---|---|
+| Mac 苹果芯片 | [下载安装预览包](https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-3.0.1-public-preview.1-mac-arm64.zip) |
+| Windows x64 | [下载安装预览包](https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-3.0.1-public-preview.1-windows-x64.zip) |
+| Intel Mac（仅工作台） | [下载安装预览包](https://github.com/suwujin-code/soulx-studio/releases/download/v3.0.1-public-preview.1/SoulX-Studio-3.0.1-public-preview.1-mac-intel.zip) |
+
+**未签名/未公证；首次安装需要联网。目标电脑真实安装及配音仍待验收。**
+
 ## 开始使用
 
 ### 安装预览包
