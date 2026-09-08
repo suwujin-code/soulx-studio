@@ -1,0 +1,37 @@
+{
+  "public_revision": "public-preview.1",
+  "payload": {
+    "file_count": 67,
+    "sha256": "77bbffa65d2f050920873881c0fd5d46328ed1c0ab22530d6222825e71be605a",
+    "bytes": 976576
+  },
+  "artifacts": [
+    {
+      "file": "SoulX-Studio-3.0.1-public-preview.1-windows-x64.zip",
+      "target": "windows-x64",
+      "sha256": "a94a5dcb46e77b3e229602f2a4fd01413d2a88d8749e79de7d337f0feb59f9be",
+      "bytes": 3689711,
+      "source_public_reviewed": true,
+      "target_executed": false,
+      "signed": false
+    },
+    {
+      "file": "SoulX-Studio-3.0.1-public-preview.1-mac-arm64.zip",
+      "target": "mac-arm64",
+      "sha256": "a46cf7c75a0bdd631697b2c5fe32d4781e513d398ec7c70ce05bf329950a2729",
+      "bytes": 3506927,
+      "source_public_reviewed": true,
+      "target_executed": false,
+      "signed": false
+    },
+    {
+      "file": "SoulX-Studio-3.0.1-public-preview.1-mac-intel.zip",
+      "target": "mac-intel",
+      "sha256": "85ae092cbe863fb9ac87078692835cbe8e2276cadd5f28cb6a0b2296287dc8cd",
+      "bytes": 3666697,
+      "source_public_reviewed": true,
+      "target_executed": false,
+      "signed": false
+    }
+  ]
+}

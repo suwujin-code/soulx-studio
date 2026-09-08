@@ -1,0 +1,136 @@
+{
+  "repo": "Soul-AILab/SoulX-Podcast-1.7B-dialect",
+  "revision": "34057a258f54e06250eaec7ed3fb74c065a9d81b",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "size": 1946,
+      "sha256": ""
+    },
+    {
+      "path": "README.md",
+      "size": 7214,
+      "sha256": ""
+    },
+    {
+      "path": "added_tokens.json",
+      "size": 196284,
+      "sha256": ""
+    },
+    {
+      "path": "assets/SoulX-Podcast-log.jpg",
+      "size": 801771,
+      "sha256": "9d3fef6b9b646d47124d37dd1353a0feb4f270c20f53dba043ca9b55b97037b3"
+    },
+    {
+      "path": "assets/SoulXPodcast_technical_report.pdf",
+      "size": 1038327,
+      "sha256": "cfd1721c8330c3ffdbe5967d1060eca8ddd84765643167815be077f7c828500c"
+    },
+    {
+      "path": "assets/performance_radar.png",
+      "size": 773761,
+      "sha256": "e8a3105b8a2525966db05fc3c3687282eff797f9b84e9e6ec08c9e4bc939534b"
+    },
+    {
+      "path": "assets/wechat.jpg",
+      "size": 187457,
+      "sha256": "96f129116e01ceeaa4f3b890f54e809bcc474f95b9f188a49b1b2c2449b79187"
+    },
+    {
+      "path": "assets/wechat2.jpg",
+      "size": 187319,
+      "sha256": "ed7adae02fb1100d97537c15fcf2d3f4851b38b18e0e36140f598cb0bb261903"
+    },
+    {
+      "path": "assets/wechat_tiamo.jpg",
+      "size": 148345,
+      "sha256": "f485f84277941eb2a5bec948d8a903da5e6bbf1868f80d1f800a712fc79ec73c"
+    },
+    {
+      "path": "campplus.onnx",
+      "size": 28303423,
+      "sha256": "a6ac6a63997761ae2997373e2ee1c47040854b4b759ea41ec48e4e42df0f4d73"
+    },
+    {
+      "path": "config.json",
+      "size": 726,
+      "sha256": ""
+    },
+    {
+      "path": "flow.cache.pt",
+      "size": 450496991,
+      "sha256": "3ebde248652c6eed855e08bb6a263af3847039a1361f8019bdb27f5f680a1dc4"
+    },
+    {
+      "path": "flow.decoder.estimator.fp32.onnx",
+      "size": 286317026,
+      "sha256": "cd54e4281701e6630730da64502d77b7e8b6e5c057cca65128bffb50f85cbf98"
+    },
+    {
+      "path": "flow.pt",
+      "size": 450575567,
+      "sha256": "ff4c2f867674411e0a08cee702996df13fa67c1cd864c06108da88d16d088541"
+    },
+    {
+      "path": "generation_config.json",
+      "size": 202,
+      "sha256": ""
+    },
+    {
+      "path": "hift.pt",
+      "size": 83390254,
+      "sha256": "3386cc880324d4e98e05987b99107f49e40ed925b8ecc87c1f4939432d429879"
+    },
+    {
+      "path": "merges.txt",
+      "size": 1671853,
+      "sha256": ""
+    },
+    {
+      "path": "model-00001-of-00003.safetensors",
+      "size": 1989918504,
+      "sha256": "4a89b39d9502f20ddc71b77bcee905b4ffeb45e2f3fa569ef7c1b2ed62ce47b0"
+    },
+    {
+      "path": "model-00002-of-00003.safetensors",
+      "size": 1484936040,
+      "sha256": "209b6498a4b58afbe1377c7871cc1004583623e4b6853cde7731b828cf9034ef"
+    },
+    {
+      "path": "model-00003-of-00003.safetensors",
+      "size": 655999104,
+      "sha256": "e9e2b5ea54d61cfc726f98ea726104f9786313ec6890c8c07e9d121ef4e98e90"
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "size": 25604,
+      "sha256": ""
+    },
+    {
+      "path": "soulxpodcast_config.json",
+      "size": 736,
+      "sha256": ""
+    },
+    {
+      "path": "special_tokens_map.json",
+      "size": 613,
+      "sha256": ""
+    },
+    {
+      "path": "tokenizer.json",
+      "size": 13001613,
+      "sha256": "eeea5386700b5de11a062dab28b2a20640a23f5da0c25e7b745540abe360d70e"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "size": 1499492,
+      "sha256": ""
+    },
+    {
+      "path": "vocab.json",
+      "size": 2776833,
+      "sha256": ""
+    }
+  ]
+}

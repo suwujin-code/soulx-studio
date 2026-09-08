@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", "module": "none", "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "strict": true, "noEmitOnError": true, "outFile": "dist/studio.js",
+    "removeComments": false, "skipLibCheck": true
+  },
+  "files": ["src/types.ts", "src/assets.ts", "src/core.ts", "src/api.ts", "src/views.ts", "src/app.ts"]
+}

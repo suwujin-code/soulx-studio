@@ -1,0 +1,6 @@
+{
+ "name":"soulx-studio-frontend", "version":"3.0.0-preview.1", "private":true,
+ "description":"Offline-first, dependency-free TypeScript interface for the existing SoulX workbench API",
+ "scripts":{"build":"tsc -p tsconfig.json && python3 build.py","typecheck":"tsc -p tsconfig.json --noEmit"},
+ "devDependencies":{"typescript":"5.8.3"}, "engines":{"node":">=20"}
+}

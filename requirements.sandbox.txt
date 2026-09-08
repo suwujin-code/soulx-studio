@@ -1,0 +1,16 @@
+# CPU-only sandbox install. The official requirements include CUDA-oriented
+# packages that are unnecessary for a no-GPU validation environment.
+librosa
+numpy
+scipy
+s3tokenizer
+diffusers
+torch==2.7.1
+torchaudio==2.7.1
+transformers==4.57.1
+accelerate==1.10.1
+onnxruntime
+einops
+gradio
+huggingface_hub
+soundfile

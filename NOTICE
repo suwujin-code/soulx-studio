@@ -1,0 +1,14 @@
+SoulX Studio — community workbench by OING
+
+This is an independent interface and desktop packaging project. It is NOT the official Soul AI Lab release and does not claim authorship of the underlying model.
+
+Upstream inference code: Soul-AILab/SoulX-Podcast
+Copyright Soul AI Lab 2025. All Rights Reserved. Apache License 2.0.
+Retain source notices in soulxpodcast/, api/, cli/ and runtime/.
+
+Workbench/frontend/desktop installer modifications: OING contributors, 2026.
+Distributed under Apache-2.0, except separately licensed assets identified below.
+
+Reference audio: example/audios/cantonese_hk_male_s006.wav, CC BY 4.0, eduhk-compling/11601706_QIUZHILIANG. Attribution and source checksum: example/audios/ATTRIBUTION.md. Its inclusion is NOT a recommendation to impersonate this speaker. Use your own authorized voice in production.
+
+Model weights are NOT bundled. Model/downloaded components retain their upstream terms. Third-party tools, fonts and runtime binaries are not licensed by this repository's Apache-2.0 file.

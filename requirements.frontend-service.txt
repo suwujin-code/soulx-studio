@@ -1,0 +1,6 @@
+# Exact top-level versions exercised in this sandbox. Not a complete transitive lock.
+# These run the frontend service and test-tone queue, NOT the real TTS model.
+fastapi==0.128.2
+uvicorn==0.48.0
+pydantic==2.13.4
+python-multipart==0.0.29

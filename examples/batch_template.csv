@@ -1,0 +1,3 @@
+text,voice_ids,dialect,region,priority,project_id,max_tokens
+「早晨，今日香港天气几舒服，最啱同屋企人出去行下。」，请替换为实际音色ID,yue,香港粤语,10,,512
+「下一段会自动排队处理，完成之后可以喺任务列表下载 WAV。」，音色ID一|音色ID二,yue,香港粤语,0,,768
