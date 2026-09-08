@@ -1,0 +1,28 @@
+name: Prepare public source provenance
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/prepare-publication.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  provenance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download public upstream for exact source comparison
+        run: |
+          set -euo pipefail
+          mkdir -p provenance
+          curl --fail --location --retry 3 --max-time 120 https://api.github.com/repos/Soul-AILab/SoulX-Podcast/commits/main -o provenance/upstream-commit.json
+          SHA=$(python3 -c "import json;print(json.load(open('provenance/upstream-commit.json'))['sha'])")
+          curl --fail --location --retry 3 --max-time 120 "https://api.github.com/repos/Soul-AILab/SoulX-Podcast/tarball/$SHA" -o provenance/upstream-source.tar.gz
+          sha256sum provenance/upstream-source.tar.gz > provenance/SHA256SUMS.txt
+          printf 'Public upstream downloaded for source comparison. Not an application release.\n' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: upstream-source-comparison
+          path: provenance/
+          retention-days: 3
