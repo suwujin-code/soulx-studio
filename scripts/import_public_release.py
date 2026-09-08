@@ -96,6 +96,33 @@ def gh_json(*args: str) -> object:
     return json.loads(run('gh',*args).stdout)
 
 
+def reviewed_release() -> dict:
+    """Resolve both draft and published releases without using the published-only tag endpoint."""
+    matches = []
+    for page in range(1, 11):
+        batch = gh_json('api', f'repos/{REPO}/releases?per_page=100&page={page}')
+        if not isinstance(batch, list):
+            raise RuntimeError('Unexpected release-list response')
+        matches.extend(r for r in batch if r.get('tag_name') == TAG)
+        if len(batch) < 100:
+            break
+    else:
+        raise RuntimeError('Release pagination limit reached; refusing an ambiguous lookup')
+    if len(matches) != 1:
+        raise RuntimeError('Expected exactly one reviewed release for the fixed tag')
+    selected = matches[0]
+    if MARKER not in (selected.get('body') or ''):
+        raise RuntimeError('An unrelated release owns this tag; refusing takeover')
+    release_id = selected.get('id')
+    if not isinstance(release_id, int) or isinstance(release_id, bool) or release_id <= 0:
+        raise RuntimeError('Invalid release ID')
+    result = gh_json('api', f'repos/{REPO}/releases/{release_id}')
+    if (result.get('id') != release_id or result.get('tag_name') != TAG
+            or MARKER not in (result.get('body') or '')):
+        raise RuntimeError('Release identity changed during lookup; refusing publication')
+    return result
+
+
 def commit_changes(message: str) -> str:
     run('git','add','--all')
     dirty = run('git','diff','--cached','--quiet',check=False)
@@ -181,7 +208,7 @@ def publish(root: Path, bundle_path: Path) -> dict:
             run('gh','release','create',TAG,'--repo',REPO,'--target',source_commit,
                 '--title','SoulX Studio 3.0.1 · Public Developer Preview',
                 '--notes-file',str(notes),'--draft','--prerelease')
-        release=gh_json('api',f'repos/{REPO}/releases/tags/{TAG}')
+        release=reviewed_release()
         published_assets={a['name']:a for a in release['assets']}
         if set(published_assets)-{p.name for p in assets}:
             raise RuntimeError('Unexpected release attachment; refusing to publish unknown files')
@@ -199,7 +226,7 @@ def publish(root: Path, bundle_path: Path) -> dict:
             if not counterpart.is_file() or sha(counterpart.read_bytes()) != sha(asset.read_bytes()):
                 raise RuntimeError('Remote attachment SHA-256 mismatch: '+asset.name)
         run('gh','release','edit',TAG,'--repo',REPO,'--draft=false','--prerelease','--latest=false')
-        release=gh_json('api',f'repos/{REPO}/releases/tags/{TAG}')
+        release=reviewed_release()
         if release['draft'] or not release['prerelease']:
             raise RuntimeError('Unexpected release visibility/type')
         receipt={'status':'PUBLISHED_PREVIEW','repository':REPO,'tag':TAG,
