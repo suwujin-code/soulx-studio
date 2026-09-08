@@ -1,0 +1,39 @@
+name: Import reviewed release from Google Drive
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-from-drive.yml'
+      - 'docs/drive-import-request.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: soulx-reviewed-release-import
+  cancel-in-progress: false
+
+jobs:
+  import-and-publish:
+    if: github.repository == 'suwujin-code/soulx-studio'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download the exact reviewed source file from Drive
+        run: python scripts/download_reviewed_drive_import.py
+      - name: Verify full package before any application-source import
+        run: python scripts/import_public_release.py --verify-only SoulX-Public-Import.zip
+      - name: Import source, upload installers and video, verify remote bytes, publish preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/import_public_release.py
+# No Drive account credentials are stored or transferred. Only the reviewed
+# checksum-locked source ZIP is read. Permission/sign-in pages fail closed.
