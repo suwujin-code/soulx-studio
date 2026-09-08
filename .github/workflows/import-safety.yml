@@ -1,0 +1,25 @@
+name: Release import safety checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/import_public_release.py
+      - tests/test_import_flow.py
+      - .github/workflows/import-safety.yml
+
+permissions:
+  contents: read
+
+jobs:
+  guard-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Publication guard tests only (not install/TTS acceptance)
+        run: python -m unittest discover -s tests -p test_import_flow.py -v
